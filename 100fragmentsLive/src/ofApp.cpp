@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetFrameRate(60);
+	ofSetVerticalSync(true);
 	ofBackground(0);
 
 	tidal = new ofxTidalCycles(3333, 4);
@@ -28,12 +29,12 @@ void ofApp::draw(){
 		if (ofGetElapsedTimef() - tidal->notes[i].timeStamp < 32) {
 			//float diff = ofGetElapsedTimef() - tidal->notes[i].timeStamp - tidal->notes[i].latency;
 			float diff = ofGetElapsedTimef() - tidal->notes[i].timeStamp;
-			if (diff > 0 && abs(diff) < 1.0 / ofGetFrameRate() && 
-				tidal->notes[i].s != "midi") {
+			if (diff > 0 && abs(diff) < 1.0 / ofGetFrameRate() && tidal->notes[i].s != "midi") {
 				int instNum = tidal->notes[i].instNum % 5;
 				brightness[monitorOrder[instNum]] += 255;
 				if (brightness[monitorOrder[instNum]] > 255) {
 					brightness[monitorOrder[instNum]] = 255;
+					
 				}
 				randomShader[monitorOrder[instNum]].num = int(ofRandom(1, randomShader[monitorOrder[instNum]].shaders.size()) - 1);
 			}
@@ -51,13 +52,6 @@ void ofApp::draw(){
 }
 
 void ofApp::exit() {
-	/*
-	sender.setup("192.168.1.255", 20000);
-	ofxOscMessage m;
-	m.setAddress("/scene");
-	m.addInt32Arg(2);
-	sender.sendMessage(m, false);
-	*/
 }
 
 //--------------------------------------------------------------
