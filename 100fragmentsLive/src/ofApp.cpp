@@ -6,7 +6,7 @@ void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofBackground(0);
 
-	tidal = new ofxTidalCycles(3333, 4);
+	tidal = new ofxTidalCycles(3333, 1);
 	for (int i = 0; i < NUM; i++) {
 		brightness[i] = 0;
 	}
@@ -25,6 +25,10 @@ void ofApp::draw(){
 	ofSetColor(255);
 	int noteNum = 0;
 	int monitorOrder[5] = { 2,1,3,0,4 };
+	while (tidal->notes.size() > 10) {
+		tidal->notes.erase(tidal->notes.begin());
+	}
+	
 	for (int i = 0; i < tidal->notes.size(); i++) {
 		if (ofGetElapsedTimef() - tidal->notes[i].timeStamp < 32) {
 			//float diff = ofGetElapsedTimef() - tidal->notes[i].timeStamp - tidal->notes[i].latency;
